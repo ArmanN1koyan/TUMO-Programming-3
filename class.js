@@ -1,32 +1,8 @@
-class Cat {
-    constructor(x, y, name) {
-        this.x = x;
-        this.y = y;
-        this.name = name;
-        this.energy = 8;
-        this.hungry = true;
-        this.mouseCount = 0;
-    }
-    move() {
-        this.x++;
-        this.y++;
-    }
-
-    eat(m) {
-        this.mouseCount += m;
-        if (this.mouseCount >= 5) {
-            this.hungry = false;
-            this.energy++;
-        }
-    }
-}
-
-class Grass {
+class LivingCreature {
     constructor(x, y, index) {
         this.x = x;
         this.y = y;
         this.index = index;
-        this.multiply = 0;
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -53,6 +29,17 @@ class Grass {
         }
         return found;
     }
+}
+
+class Grass extends LivingCreature {
+    constructor(x, y, index) {
+        super(x, y, index);
+        this.multiply = 0;
+    }
+
+    chooseCell(character) {
+        return super.chooseCell(character);
+    }
 
     mul() {
         this.multiply++;
@@ -66,11 +53,9 @@ class Grass {
     }
 }
 
-class GrassEater {
+class GrassEater extends LivingCreature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x, y, index);
         this.energy = 5;
     }
     getNewCoordinates() {
@@ -88,17 +73,7 @@ class GrassEater {
 
     chooseCell(character) {
         this.getNewCoordinates();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(character);
     }
     move() {
 
@@ -170,36 +145,14 @@ class GrassEater {
     }
 }
 
-class Predator {
+class Predator extends LivingCreature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x, y, index);
         this.energy = 5;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
     }
 
     chooseCell(character) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(character);
     }
     move() {
 
@@ -267,12 +220,12 @@ class Predator {
     }
 }
 
-class BlueGrass {
+class BlueGrass extends LivingCreature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x, y, index)
         this.multiply = 0;
+    }
+    getNewCoordinates() {
         this.directions = [
             [this.x - 2, this.y - 1],
             [this.x - 2, this.y - 2],
@@ -298,17 +251,8 @@ class BlueGrass {
     }
 
     chooseCell(character) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        this.getNewCoordinates();
+        return super.chooseCell(character);
     }
 
     mul() {
@@ -323,36 +267,14 @@ class BlueGrass {
     }
 }
 
-class AllEater {
+class AllEater extends LivingCreature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x, y, index);
         this.energy = 5;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
     }
 
     chooseCell(character) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(character);
     }
     move() {
 
@@ -424,13 +346,13 @@ class AllEater {
     }
 }
 
-class Light {
+class Light extends LivingCreature {
 
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x, y, index);
         this.multiply = 0;
+    }
+    getNewCoordinates() {
         this.directions = [
             [this.x - 2, this.y - 1],
             [this.x - 2, this.y - 2],
@@ -456,17 +378,8 @@ class Light {
     }
 
     chooseCell(character) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        this.getNewCoordinates();
+        return super.chooseCell(character)
     }
 
     mul() {
