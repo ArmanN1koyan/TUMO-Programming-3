@@ -1,28 +1,10 @@
 let socket = io();
 
-let matrix = [
-
-];
-
-let m = 50;
 let side = 15;
 
-function random(max) {
-    return Math.floor(Math.random() * (max - 1) + 1);
-}
-
 function setup() {
-    for (let y = 0; y < m; y++) {
-        matrix[y] = [];
-        for (let x = 0; x < m; x++) {
-            matrix[y][x] = Math.round(random(5));
-        }
-    }
-    matrix[25][25] = 6;
-    frameRate(5);
-    createCanvas(matrix[0].length * side, matrix.length * side);
+    createCanvas(50 * side, 50 * side);
     background('lightblue');
-    
 }
 
 function drawObjColors(matrix) {
@@ -63,6 +45,6 @@ function drawObjColors(matrix) {
 
 setInterval(
     function () {
-        socket.on('send matrix', drawObjColors)
+    socket.on('send matrix', drawObjColors)
     },1000
 )

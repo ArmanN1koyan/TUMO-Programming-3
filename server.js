@@ -10,13 +10,29 @@ const Predator = require("./Objects/Predator");
 const AllEater = require("./Objects/AllEater");
 const Light = require("./Objects/Light");
 
-
+app.use(express.static("."));
 
 app.get('/', function (req, res) {
     res.redirect('index.html');
 });
 
 server.listen(3000);
+
+
+matrix = [
+
+];
+m = 50;
+
+for (let y = 0; y < m; y++) {
+    matrix[y] = [];
+    for (let x = 0; x < m; x++) {
+        matrix[y][x] = Math.floor(Math.random() * (3 - 1) + 1);
+    }
+}
+matrix[25][25] = 6;
+io.sockets.emit('send matrix', matrix);
+
 
 grassArr = [];
 bluegrassArr = [];
@@ -25,7 +41,7 @@ grassEaterArr = [];
 AllEaterArr = [];
 lightArr = [];
 
-function CreateObjects(matrix){
+function createObject(matrix){
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < matrix[y].length; x++) {
 
@@ -55,7 +71,7 @@ function CreateObjects(matrix){
             }
         }
     }
-    io.socket.emit('send matrix', matrix);
+    io.sockets.emit('send matrix', matrix);
 }
 
 function game(){
@@ -86,10 +102,11 @@ function game(){
     for (let i in lightArr) {
         lightArr[i].mul();
     }
+    io.sockets.emit("send matrix", matrix);
 }
 
 setInterval(game, 1000)
 
-io.on('connection', function(){
-    CreateObjects(matrix);
+io.on('connection', function () {
+    createObject(matrix);
 })

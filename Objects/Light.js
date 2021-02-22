@@ -41,6 +41,7 @@ module.exports = class Light extends LivingCreature {
         for (let i = 0; i <= 4; i++) {
             let rand = Math.round(super.random(4));
             let randpleace = Math.round(super.random(5));
+            return randpleace;
         }
 
         this.multiply++;
