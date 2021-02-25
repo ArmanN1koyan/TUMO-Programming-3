@@ -75,6 +75,9 @@ function createObject(matrix){
 }
 
 function game(){
+    for (let i in lightArr) {
+        lightArr[i].mul();
+    }
     for (let i in grassArr) {
         grassArr[i].mul();
     }
@@ -99,13 +102,10 @@ function game(){
         AllEaterArr[i].mul();
         AllEaterArr[i].die();
     }
-    for (let i in lightArr) {
-        lightArr[i].mul();
-    }
-    io.sockets.emit("send matrix", matrix);
+    io.sockets.emit('send matrix', matrix);
 }
 
-setInterval(game, 1000)
+setInterval(game, 1000);
 
 io.on('connection', function () {
     createObject(matrix);

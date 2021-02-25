@@ -1,4 +1,4 @@
-let socket = io();
+const socket = io();
 
 let side = 15;
 
@@ -41,10 +41,7 @@ function drawObjColors(matrix) {
             }
         }
     }
+    console.log(matrix);
 }
 
-setInterval(
-    function () {
-    socket.on('send matrix', drawObjColors)
-    },1000
-)
+socket.on('send matrix', drawObjColors)
