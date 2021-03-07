@@ -1,0 +1,26 @@
+{
+  "grassLength": {
+    "name": "Grass",
+    "count": 637
+  },
+  "grassEaterLength": {
+    "name": "Grass eater",
+    "count": 620
+  },
+  "bluegrassLength": {
+    "name": "Blue grass eater",
+    "count": 645
+  },
+  "predatorLength": {
+    "name": "Predator",
+    "count": 597
+  },
+  "AllEaterLength": {
+    "name": "Alleater",
+    "count": 0
+  },
+  "lightLength": {
+    "name": "Light",
+    "count": 1
+  }
+}

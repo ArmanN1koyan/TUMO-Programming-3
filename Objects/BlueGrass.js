@@ -37,7 +37,7 @@ module.exports = class BlueGrass extends LivingCreature {
 
     mul() {
         this.multiply++;
-        let newCell = super.random(this.chooseCell(0));
+        let newCell = super.randomArray(this.chooseCell(0));
         if (this.multiply >= 16 && newCell) {
             let newBlueGrass = new BlueGrass(newCell[0], newCell[1], this.index);
             bluegrassArr.push(newBlueGrass);

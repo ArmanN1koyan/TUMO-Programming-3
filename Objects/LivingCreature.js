@@ -19,6 +19,9 @@ module.exports = class LivingCreature {
     random(max) {
         return Math.floor(Math.random() * (max - 1) + 1);
     }
+    randomArray(arr) {
+        return arr[this.random(arr.length - 1)];
+    }
 
     chooseCell(character) {
         let found = [];

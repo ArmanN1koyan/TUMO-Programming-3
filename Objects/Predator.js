@@ -11,7 +11,7 @@ module.exports = class Predator extends LivingCreature {
     }
     move() {
 
-        let newCell = super.random(this.chooseCell(0));
+        let newCell = super.randomArray(this.chooseCell(0));
 
         if (newCell) {
             let newX = newCell[0];
@@ -30,7 +30,7 @@ module.exports = class Predator extends LivingCreature {
     }
     eat() {
 
-        let newCell = super.random(this.chooseCell(3));
+        let newCell = super.randomArray(this.chooseCell(3));
 
         if (newCell) {
             let newX = newCell[0];
@@ -39,7 +39,9 @@ module.exports = class Predator extends LivingCreature {
             matrix[this.y][this.x] = 0;
             matrix[newY][newX] = this.index;
 
-            for (let i in grassEaterArr) {
+            deleteObject(newX, newY)
+
+            for (let i = 0; i < grassEaterArr.length; i++) {
                 if (newX == grassEaterArr[i].x && newY == grassEaterArr[i].y) {
                     grassEaterArr.splice(i, 1);
                     break;
@@ -54,8 +56,8 @@ module.exports = class Predator extends LivingCreature {
     }
 
     mul() {
-        let newCell = super.random(this.chooseCell(0));
-        if (this.energy > 15 && newCell) {
+        let newCell = super.randomArray(this.chooseCell(0));
+        if (this.energy > 12 && newCell) {
             let newPredator = new Predator(newCell[0], newCell[1], this.index);
             predatorArr.push(newPredator);
             matrix[newCell[1]][newCell[0]] = 4;
@@ -66,7 +68,7 @@ module.exports = class Predator extends LivingCreature {
     die() {
         if (this.energy <= 0) {
             matrix[this.y][this.x] = 0;
-            for (let i in predatorArr) {
+            for (let i = 0; i < predatorArr.length; i++) {
                 if (predatorArr[i].x == this.x && predatorArr[i].y == this.y) {
                     predatorArr.splice(i, 1);
                 }

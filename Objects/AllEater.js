@@ -11,7 +11,7 @@ module.exports = class AllEater extends LivingCreature {
     }
     move() {
 
-        let newCell = super.random(this.chooseCell(0));
+        let newCell = super.randomArray(this.chooseCell(0));
 
         if (newCell) {
             let newX = newCell[0];
@@ -29,36 +29,39 @@ module.exports = class AllEater extends LivingCreature {
 
     }
     eat() {
-
         for (let i = 0; i <= 4; i++) {
             let randcube = Math.round(super.random(4));
-        }
 
-        let newCell = super.random(this.chooseCell(randcube));
+            let newCell = super.randomArray(this.chooseCell(randcube));
 
-        if (newCell) {
-            let newX = newCell[0];
-            let newY = newCell[1];
 
-            matrix[this.y][this.x] = 0;
-            matrix[newY][newX] = this.index;
+            if (newCell) {
+                let newX = newCell[0];
+                let newY = newCell[1];
 
-            for (let i in AllEaterArr) {
-                if (newX == AllEaterArr[i].x && newY == AllEaterArr[i].y) {
-                    AllEaterArr.splice(i, 1);
-                    break;
+                matrix[this.y][this.x] = 0;
+
+                deleteObject(newX, newY)
+
+                matrix[newY][newX] = this.index;
+
+                for (let i = 0; i < AllEaterArr.length; i++) {
+                    if (newX == AllEaterArr[i].x && newY == AllEaterArr[i].y) {
+                        AllEaterArr.splice(i, 1);
+                        break;
+                    }
                 }
+
+                this.y = newY;
+                this.x = newX;
+                this.energy += 2;
+
             }
-
-            this.y = newY;
-            this.x = newX;
-            this.energy += 2;
-
         }
     }
 
     mul() {
-        let newCell = super.random(this.chooseCell(0));
+        let newCell = super.randomArray(this.chooseCell(0));
         if (this.energy > 10 && newCell) {
             let newAllEater = new AllEater(newCell[0], newCell[1], this.index);
             AllEaterArr.push(newAllEater);
@@ -70,7 +73,7 @@ module.exports = class AllEater extends LivingCreature {
     die() {
         if (this.energy <= 0) {
             matrix[this.y][this.x] = 0;
-            for (let i in AllEaterArr) {
+            for (let i = 0; i < AllEaterArr.length; i++) {
                 if (AllEaterArr[i].x == this.x && AllEaterArr[i].y == this.y) {
                     AllEaterArr.splice(i, 1);
                 }
